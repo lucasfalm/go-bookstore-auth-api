@@ -3,32 +3,29 @@ package access_token
 import (
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
+func TestConstantExpirationTime(t *testing.T) {
+	assert.EqualValues(t, 24, expirationTime)
+}
 func TestGetNewAccessToken(t *testing.T) {
 	at := &AccessToken{}
-	if at.IsExpired() {
-		t.Error("new access token should now be expired")
-	}
 
-	if at.AccessToken != "" {
-		t.Error("new access token should not have defined access token id")
-	}
+	assert.Equal(t, int64(0), at.Expires)
 
-	if at.UserID != 0 {
-		t.Error("new access token should not have an associated user id")
-	}
+	assert.Equal(t, "", at.AccessToken)
+
+	assert.NotEqual(t, 0, at.UserID)
 }
 
 func TestIsExpired(t *testing.T) {
 	at := &AccessToken{}
 
-	if at.IsExpired() {
-		t.Error("new access token should not be expired by default")
-	}
+	assert.Equal(t, false, at.IsExpired())
 
 	at.Expires = time.Now().UTC().Add(3 * time.Hour).Unix()
-	if at.IsExpired() {
-		t.Error("access token created should not be expired after adding 3 hours")
-	}
+
+	assert.Equal(t, true, !at.IsExpired())
 }
