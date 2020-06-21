@@ -18,6 +18,10 @@ func TestGetNewAccessToken(t *testing.T) {
 	assert.Equal(t, "", at.AccessToken)
 
 	assert.NotEqual(t, 0, at.UserID)
+
+	newAccessToken := GetNewAccessToken()
+
+	assert.NotEmpty(t, newAccessToken.Expires, "new access token should not be empty")
 }
 
 func TestIsExpired(t *testing.T) {
