@@ -5,7 +5,7 @@ import (
 	"github.com/flucas97/bookstore/auth-api/src/utils/errors_utils"
 )
 
-type Service interface {
+type ServiceInterface interface {
 	GetById(string) (*AccessToken, error)
 }
 
@@ -13,9 +13,9 @@ type service struct {
 	dbRepo db.DbRepository
 }
 
-func NewService(dbRepo db.DbRepository) *service {
+func NewService(repo db.dbRepository) *service {
 	return &service{
-		dbRepo: dbRepo,
+		dbRepo: repo,
 	}
 }
 

@@ -7,25 +7,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type AccessTokenHandler interface {
+type AccessTokenHandlerInterface interface {
 	GetById(*gin.Context)
 }
 
 type accessTokenHandler struct {
-	service access_token.Service
+	service access_token.ServiceInterface
 }
 
-func NewAccessTokenHandler(service access_token.Service) *accessTokenHandler {
+func NewAccessTokenHandler(service access_token.ServiceInterface) *accessTokenHandler {
 	return &accessTokenHandler{
 		service: service,
 	}
 }
 
 func (handler *accessTokenHandler) GetById(c *gin.Context) {
-	accessToken, err := handler.service.GetById(c.Param("access_token_id"))
-	if err != nil {
-		c.JSON(err.Status, err)
-		return
-	}
+	accessToken, _ := handler.service.GetById(c.Param("access_token_id"))
 	c.JSON(http.StatusOK, accessToken)
 }
