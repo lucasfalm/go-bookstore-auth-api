@@ -1,24 +1,25 @@
 package access_token
 
-import "time"
+import "github.com/flucas97/bookstore/users-api/utils/errors_utils"
 
-const (
-	expirationTime = 24
+var (
+	AccessTokenService AccessTokenServiceInterface = &accessTokenService{}
 )
 
-type AccessToken struct {
-	AccessToken string `json:"access_token"`
-	UserID      int64  `json:"user_id"`
-	ClientID    int64  `json:"client_id"`
-	Expires     int64  `json:"expires"`
+type accessTokenService struct {
+	repository Repository
 }
 
-func GetNewAccessToken() *AccessToken {
-	return &AccessToken{
-		Expires: time.Now().UTC().Add(expirationTime * time.Hour).Unix(),
+type AccessTokenServiceInterface interface {
+	GetById(string) (*accessTokenService, *errors_utils.RestErr)
+}
+
+func NewAccessTokenService(repo Repository) accessTokenService {
+	return accessTokenService{
+		repository: repo,
 	}
 }
 
-func (at *AccessToken) IsExpired() bool {
-	return false
+func (s *accessTokenService) GetById(ID string) (*accessTokenService, *errors_utils.RestErr) {
+
 }
