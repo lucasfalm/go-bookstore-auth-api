@@ -5,12 +5,12 @@ import (
 	"github.com/flucas97/bookstore/auth-api/src/utils/errors_utils"
 )
 
-func NewRepository() *dbRepository {
-	return &dbRepository{}
+type DbRepository interface {
+	GetById(string) (*access_token.AccessToken, *errors_utils.RestErr)
 }
 
-type DbRepository interface {
-	GetById(string) (*access_token.AccessToken, error)
+func NewRepository() *dbRepository {
+	return &dbRepository{}
 }
 
 type dbRepository struct {

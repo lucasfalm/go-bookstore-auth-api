@@ -1,19 +1,21 @@
 package access_token
 
 import (
-	"github.com/flucas97/bookstore/auth-api/src/repository/db"
 	"github.com/flucas97/bookstore/auth-api/src/utils/errors_utils"
 )
 
+type Repository interface {
+	GetById(string) (*AccessToken, *errors_utils.RestErr)
+}
 type ServiceInterface interface {
-	GetById(string) (*AccessToken, error)
+	GetById(string) (*AccessToken, *errors_utils.RestErr)
 }
 
 type service struct {
-	dbRepo db.DbRepository
+	dbRepo Repository
 }
 
-func NewService(repo db.dbRepository) *service {
+func NewService(repo Repository) ServiceInterface {
 	return &service{
 		dbRepo: repo,
 	}

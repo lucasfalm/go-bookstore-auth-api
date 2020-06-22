@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type AccessTokenHandlerInterface interface {
+type AccessTokenHandler interface {
 	GetById(*gin.Context)
 }
 
@@ -15,7 +15,7 @@ type accessTokenHandler struct {
 	service access_token.ServiceInterface
 }
 
-func NewAccessTokenHandler(service access_token.ServiceInterface) *accessTokenHandler {
+func NewAccessTokenHandler(service access_token.ServiceInterface) AccessTokenHandler {
 	return &accessTokenHandler{
 		service: service,
 	}

@@ -12,7 +12,8 @@ var (
 )
 
 func StartApplication() {
-	atService := access_token.NewService(db.NewRepository()) // need to fix 'import cycle not allowed' using interfaces
+	repository := db.NewRepository()
+	atService := access_token.NewService(repository) // need to fix 'import cycle not allowed' using interfaces
 	atHandler := http.NewAccessTokenHandler(atService)
 
 	router.GET("oauth/access_token/access_token_id", atHandler.GetById)
