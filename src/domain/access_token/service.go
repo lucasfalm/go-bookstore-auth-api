@@ -1,25 +1,24 @@
 package access_token
 
-import "github.com/flucas97/bookstore/users-api/utils/errors_utils"
-
-type Repository interface {
-	GetById(string) (*accessTokenService, *errors_utils.RestErr)
-}
+import (
+	"github.com/flucas97/bookstore/auth-api/src/repository/db"
+	"github.com/flucas97/bookstore/auth-api/src/utils/errors_utils"
+)
 
 type Service interface {
-	GetById(string) (*accessTokenService, *errors_utils.RestErr)
+	GetById(string) (*AccessToken, error)
 }
 
 type service struct {
-	repository Repository
+	dbRepo db.DbRepository
 }
 
-func NewService(repo Repository) Service { 
+func NewService(dbRepo db.DbRepository) *service {
 	return &service{
-		repository: repo,
+		dbRepo: dbRepo,
 	}
 }
 
-func (s *service) GetById(ID string) (*accessTokenService, *errors_utils.RestErr)
-	return nil, nil 
+func (s *service) GetById(accessTokenId string) (*AccessToken, *errors_utils.RestErr) {
+	return nil, nil
 }
