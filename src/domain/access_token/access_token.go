@@ -6,6 +6,7 @@ const (
 	expirationTime = 24
 )
 
+// model
 type AccessToken struct {
 	AccessToken string `json:"access_token"`
 	UserID      int64  `json:"user_id"`
@@ -13,12 +14,14 @@ type AccessToken struct {
 	Expires     int64  `json:"expires"`
 }
 
+// model functions
 func GetNewAccessToken() *AccessToken {
 	return &AccessToken{
 		Expires: time.Now().UTC().Add(expirationTime * time.Hour).Unix(),
 	}
 }
 
+// validations
 func (at *AccessToken) IsExpired() bool {
 	return false
 }

@@ -3,25 +3,31 @@ package http
 import (
 	"net/http"
 
-	"github.com/flucas97/bookstore/auth-api/src/domain/access_token"
+	"github.com/flucas97/bookstore/auth-api/src/service"
 	"github.com/gin-gonic/gin"
 )
 
-type AccessTokenHandler interface {
+// Access point to controller
+type AccessTokenHandlerInterface interface {
 	GetById(*gin.Context)
 }
 
+// only related with services
 type accessTokenHandler struct {
-	service access_token.ServiceInterface
+	service service.ServiceInterface
 }
 
-func NewAccessTokenHandler(service access_token.ServiceInterface) AccessTokenHandler {
+// Return the access point for controller, and passing wich service it will handle
+func NewAccessTokenHandler(service service.ServiceInterface) AccessTokenHandlerInterface {
 	return &accessTokenHandler{
 		service: service,
 	}
 }
 
 func (handler *accessTokenHandler) GetById(c *gin.Context) {
-	accessToken, _ := handler.service.GetById(c.Param("access_token_id"))
+	accessToken, err := handler.service.GetById(c.Param("access_token_id"))
+	if err != nil {
+		c.JSON(err.Status, err)
+	}
 	c.JSON(http.StatusOK, accessToken)
 }
