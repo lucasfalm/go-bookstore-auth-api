@@ -8,11 +8,15 @@ import (
 // related with controller
 type ServiceInterface interface {
 	GetById(string) (*access_token.AccessToken, *errors_utils.RestErr)
+	Create(access_token.AccessToken) *errors_utils.RestErr
+	UpdateExpirationTime(access_token.AccessToken) *errors_utils.RestErr
 }
 
 // related with Repository (database)
 type Repository interface {
 	GetById(string) (*access_token.AccessToken, *errors_utils.RestErr)
+	Create(access_token.AccessToken) *errors_utils.RestErr
+	UpdateExpirationTime(access_token.AccessToken) *errors_utils.RestErr
 }
 
 type service struct {
@@ -32,4 +36,12 @@ func (s *service) GetById(accessTokenId string) (*access_token.AccessToken, *err
 		return nil, err
 	}
 	return AccessToken, nil
+}
+
+func (s *service) Create(at access_token.AccessToken) *errors_utils.RestErr {
+	return nil
+}
+
+func (s *service) UpdateExpirationTime(at access_token.AccessToken) *errors_utils.RestErr {
+	return nil
 }
