@@ -57,15 +57,28 @@ func (r *dbRepository) Create(at access_token.AccessToken) *errors_utils.RestErr
 	}
 	defer session.Close()
 
-	if err := session.Query(queryUpdateExpirationTime,
-		at.Expires,
+	if err := session.Query(queryCreateAccessToken,
 		at.AccessToken,
-	).Exec(); err != nil {
+		at.UserID,
+		at.ClientID,
+		at.Expires).Exec(); err != nil {
 		return errors_utils.NewInternalServerError(err.Error())
 	}
 	return nil
 }
 
 func (r *dbRepository) UpdateExpirationTime(at access_token.AccessToken) *errors_utils.RestErr {
+	session, err := cassandra.GetSession()
+	if err != nil {
+		return errors_utils.NewInternalServerError(fmt.Sprintf("error: %v", err.Error()))
+	}
+	defer session.Close()
+
+	if err := session.Query(queryUpdateExpirationTime,
+		at.Expires,
+		at.AccessToken,
+	).Exec(); err != nil {
+		return errors_utils.NewInternalServerError(err.Error())
+	}
 	return nil
 }
