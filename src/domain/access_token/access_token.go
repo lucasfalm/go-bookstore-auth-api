@@ -37,11 +37,11 @@ func (at *AccessToken) Validate() *errors_utils.RestErr {
 		return errors_utils.NewBadRequestError("invalid access token")
 	}
 
-	if at.UserID < 0 {
+	if at.UserID <= 0 {
 		return errors_utils.NewBadRequestError("invalid user ID")
 	}
 
-	if at.ClientID < 0 {
+	if at.ClientID <= 0 {
 		return errors_utils.NewBadRequestError("invalid client ID")
 	}
 
