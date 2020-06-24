@@ -1,7 +1,9 @@
-### golang-bookstore-auth-api
-Restful API for auth bookstore users  
+### Restful API for auth bookstore users  
 
-Start Cassandra
+Starting Cassandra
 
 sudo -u cassandra /usr/sbin/cassandra -f 
+
+Cassandra cli
+
 cqlsh
