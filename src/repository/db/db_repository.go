@@ -3,7 +3,7 @@ package db
 import (
 	"fmt"
 
-	"github.com/flucas97/bookstore/auth-api/clients/cassandra"
+	"github.com/flucas97/bookstore/auth-api/src/clients/cassandra"
 	"github.com/flucas97/bookstore/auth-api/src/domain/access_token"
 	"github.com/flucas97/bookstore/auth-api/src/utils/errors_utils"
 )

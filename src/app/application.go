@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/flucas97/bookstore/auth-api/clients/cassandra"
+	"github.com/flucas97/bookstore/auth-api/src/clients/cassandra"
 	"github.com/flucas97/bookstore/auth-api/src/http"
 	"github.com/flucas97/bookstore/auth-api/src/repository/db"
 	"github.com/flucas97/bookstore/auth-api/src/service"
@@ -24,7 +24,7 @@ func StartApplication() {
 	atHandler := http.NewAccessTokenHandler(atService) // to use controller I need to pass a service
 	// atHandler := http.NewAccessTokenHandler(service.NewService(db.NewRepository()))
 
-	router.GET("oauth/access_token/:access_token_id", atHandler.GetById)
-	router.POST("oauth/access_token", atHandler.Create)
+	MapURL(atHandler)
+
 	router.Run(":8080")
 }
