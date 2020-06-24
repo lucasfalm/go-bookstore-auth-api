@@ -1,9 +1,9 @@
-### Restful API for auth bookstore users  
+## Restful API for auth bookstore users  
 
-Starting Cassandra
+### Starting Cassandra
 
 sudo -u cassandra /usr/sbin/cassandra -f 
 
-Cassandra cli
+### Cassandra cli
 
 cqlsh
