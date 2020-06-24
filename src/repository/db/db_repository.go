@@ -9,7 +9,8 @@ import (
 )
 
 const (
-	queryGetAccessToken = "SELECT access_token, user_id, client_id, expires FROM access_tokens WHERE access_token=?;"
+	queryGetAccessToken    = "SELECT access_token, user_id, client_id, expires FROM access_tokens WHERE access_token=?;"
+	queryCreateAccessToken = "INSERT INTO access_token (access_token, user_id, client_id, expires) VALUES (?, ?, ? ,?);"
 )
 
 // entrypoint to use the repository
@@ -48,5 +49,18 @@ func (r *dbRepository) GetById(id string) (*access_token.AccessToken, *errors_ut
 }
 
 func (r *dbRepository) Create(at access_token.AccessToken) *errors_utils.RestErr {
+	session, err := cassandra.GetSession()
+	if err != nil {
+		return errors_utils.NewInternalServerError(fmt.Sprintf("error: %v", err.Error()))
+	}
+	defer session.Close()
+
+	if err := session.Query(queryCreateAccessToken,
+		at.AccessToken,
+		at.UserID,
+		at.ClientID,
+		at.Expires).Exec(); err != nil {
+		return errors_utils.NewInternalServerError(err.Error())
+	}
 	return nil
 }
