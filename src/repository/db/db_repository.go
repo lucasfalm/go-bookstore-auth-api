@@ -29,11 +29,7 @@ type dbRepository struct{}
 
 func (r *dbRepository) GetById(id string) (*access_token.AccessToken, *errors_utils.RestErr) {
 	accessToken := access_token.AccessToken{}
-	session, err := cassandra.GetSession()
-	if err != nil {
-		return nil, errors_utils.NewInternalServerError(fmt.Sprintf("error: %v", err.Error()))
-	}
-	defer session.Close()
+	session := cassandra.GetSession()
 
 	if err := session.Query(queryGetAccessToken, id).Scan(
 		&accessToken.AccessToken,
@@ -51,11 +47,7 @@ func (r *dbRepository) GetById(id string) (*access_token.AccessToken, *errors_ut
 }
 
 func (r *dbRepository) Create(at access_token.AccessToken) *errors_utils.RestErr {
-	session, err := cassandra.GetSession()
-	if err != nil {
-		return errors_utils.NewInternalServerError(fmt.Sprintf("error: %v", err.Error()))
-	}
-	defer session.Close()
+	session := cassandra.GetSession()
 
 	if err := session.Query(queryCreateAccessToken,
 		at.AccessToken,
@@ -68,11 +60,7 @@ func (r *dbRepository) Create(at access_token.AccessToken) *errors_utils.RestErr
 }
 
 func (r *dbRepository) UpdateExpirationTime(at access_token.AccessToken) *errors_utils.RestErr {
-	session, err := cassandra.GetSession()
-	if err != nil {
-		return errors_utils.NewInternalServerError(fmt.Sprintf("error: %v", err.Error()))
-	}
-	defer session.Close()
+	session := cassandra.GetSession()
 
 	if err := session.Query(queryUpdateExpirationTime,
 		at.Expires,
