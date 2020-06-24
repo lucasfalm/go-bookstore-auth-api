@@ -37,8 +37,15 @@ func (r *dbRepository) GetById(id string) (*access_token.AccessToken, *errors_ut
 		&accessToken.ClientID,
 		&accessToken.Expires,
 	); err != nil {
-		return nil, errors_utils.NewInternalServerError(fmt.Sprintf("error: %v", err.Error()))
+		if err.Error() == "not found" {
+			return nil, errors_utils.NewNotFoundError(fmt.Sprintf("token %v not found", id))
+		}
+		return nil, errors_utils.NewInternalServerError(err.Error())
 	}
 
 	return &accessToken, nil
+}
+
+func (r *dbRepository) Create(at access_token.AccessToken) *errors_utils.RestErr {
+	return nil
 }

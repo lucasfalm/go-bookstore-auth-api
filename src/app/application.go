@@ -24,6 +24,6 @@ func StartApplication() {
 	atHandler := http.NewAccessTokenHandler(atService) // to use controller I need to pass a service
 	// atHandler := http.NewAccessTokenHandler(service.NewService(db.NewRepository()))
 
-	router.GET("oauth/access_token/access_token_id", atHandler.GetById)
+	router.GET("oauth/access_token/:access_token_id", atHandler.GetById)
 	router.Run(":8080")
 }
