@@ -39,7 +39,10 @@ func (s *service) GetById(accessTokenId string) (*access_token.AccessToken, *err
 }
 
 func (s *service) Create(at access_token.AccessToken) *errors_utils.RestErr {
-	return nil
+	if err := at.Validate(); err != nil {
+		return err
+	}
+	return s.dbRepo.Create(at)
 }
 
 func (s *service) UpdateExpirationTime(at access_token.AccessToken) *errors_utils.RestErr {
