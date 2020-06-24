@@ -9,8 +9,9 @@ import (
 )
 
 const (
-	queryGetAccessToken    = "SELECT access_token, user_id, client_id, expires FROM access_tokens WHERE access_token=?;"
-	queryCreateAccessToken = "INSERT INTO access_token (access_token, user_id, client_id, expires) VALUES (?, ?, ? ,?);"
+	queryGetAccessToken       = "SELECT access_token, user_id, client_id, expires FROM access_tokens WHERE access_token=?;"
+	queryCreateAccessToken    = "INSERT INTO access_token (access_token, user_id, client_id, expires) VALUES (?, ?, ? ,?);"
+	queryUpdateExpirationTime = "UPDATE access_token SET expires=? WHERE access_token=?;"
 )
 
 // entrypoint to use the repository
@@ -56,11 +57,10 @@ func (r *dbRepository) Create(at access_token.AccessToken) *errors_utils.RestErr
 	}
 	defer session.Close()
 
-	if err := session.Query(queryCreateAccessToken,
+	if err := session.Query(queryUpdateExpirationTime,
+		at.Expires,
 		at.AccessToken,
-		at.UserID,
-		at.ClientID,
-		at.Expires).Exec(); err != nil {
+	).Exec(); err != nil {
 		return errors_utils.NewInternalServerError(err.Error())
 	}
 	return nil
