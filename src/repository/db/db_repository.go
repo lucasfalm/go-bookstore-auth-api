@@ -15,6 +15,7 @@ const (
 // entrypoint to use the repository
 type DbRepositoryInterface interface {
 	GetById(string) (*access_token.AccessToken, *errors_utils.RestErr)
+	Create(access_token.AccessToken) *errors_utils.RestErr
 }
 
 func NewRepository() DbRepositoryInterface {
