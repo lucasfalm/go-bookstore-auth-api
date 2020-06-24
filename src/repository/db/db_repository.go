@@ -17,6 +17,7 @@ const (
 type DbRepositoryInterface interface {
 	GetById(string) (*access_token.AccessToken, *errors_utils.RestErr)
 	Create(access_token.AccessToken) *errors_utils.RestErr
+	UpdateExpirationTime(access_token.AccessToken) *errors_utils.RestErr
 }
 
 func NewRepository() DbRepositoryInterface {
@@ -62,5 +63,9 @@ func (r *dbRepository) Create(at access_token.AccessToken) *errors_utils.RestErr
 		at.Expires).Exec(); err != nil {
 		return errors_utils.NewInternalServerError(err.Error())
 	}
+	return nil
+}
+
+func (r *dbRepository) UpdateExpirationTime(at access_token.AccessToken) *errors_utils.RestErr {
 	return nil
 }
