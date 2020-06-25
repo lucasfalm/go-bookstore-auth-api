@@ -21,6 +21,7 @@ type DbRepositoryInterface interface {
 	UpdateExpirationTime(access_token.AccessToken) *errors_utils.RestErr
 }
 
+// returns a interface
 func NewRepository() DbRepositoryInterface {
 	return &dbRepository{}
 }
