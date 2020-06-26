@@ -1,11 +1,11 @@
 package rest
 
 import (
+	"encoding/json"
 	"time"
 
 	"github.com/flucas97/bookstore/users-api/model/users"
 	"github.com/flucas97/bookstore/users-api/utils/errors_utils"
-	"github.com/gin-gonic/gin/internal/json"
 	"github.com/mercadolibre/golang-restclient/rest"
 )
 
