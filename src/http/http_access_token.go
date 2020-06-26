@@ -5,7 +5,7 @@ import (
 
 	"github.com/flucas97/bookstore/auth-api/src/domain/access_token"
 	"github.com/flucas97/bookstore/auth-api/src/service"
-	"github.com/flucas97/bookstore/users-api/utils/errors_utils"
+	"github.com/flucas97/bookstore/auth-api/src/utils/errors_utils"
 	"github.com/gin-gonic/gin"
 )
 
