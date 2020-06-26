@@ -19,6 +19,14 @@ type AccessToken struct {
 	Expires     int64  `json:"expires"`
 }
 
+type AccessTokenRequest struct {
+	GrantType    string `json:"grant_type"`
+	Username     string `json:"username"`
+	Password     int64  `json:"password"`
+	ClientId     string `json:"client_id"`
+	ClientSecret string `json:"client_secret"`
+}
+
 // model functions
 func GetNewAccessToken() *AccessToken {
 	return &AccessToken{
