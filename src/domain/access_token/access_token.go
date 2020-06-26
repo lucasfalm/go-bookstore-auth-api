@@ -44,8 +44,8 @@ type AccessToken struct {
 }
 
 // model functions
-func GetNewAccessToken() *AccessToken {
-	return &AccessToken{
+func GetNewAccessToken(id int64) AccessToken {
+	return AccessToken{
 		Expires: time.Now().UTC().Add(expirationTime * time.Hour).Unix(),
 	}
 }
