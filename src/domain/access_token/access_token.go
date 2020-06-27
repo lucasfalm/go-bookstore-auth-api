@@ -1,10 +1,12 @@
 package access_token
 
 import (
+	"fmt"
 	"strings"
 	"time"
 
 	"github.com/flucas97/bookstore/auth-api/src/utils/errors_utils"
+	"github.com/flucas97/bookstore/users-api/utils/crypto_utils"
 )
 
 const (
@@ -73,4 +75,8 @@ func (at *AccessToken) Validate() *errors_utils.RestErr {
 		return errors_utils.NewBadRequestError("invalid expiration time")
 	}
 	return nil
+}
+
+func (at *AccessToken) Generate() {
+	at.AccessToken = crypto_utils.GetMd5(fmt.Sprintf("at-%d-%d-ran", at.UserID, at.Expires))
 }
